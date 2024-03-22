@@ -13,7 +13,7 @@ interface IAuthStore {
 
   login: (email: string, password: string) => Promise<boolean>;
   checkStatus: () => Promise<void>;
-  reset: () => void;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<IAuthStore>()((set, get) => ({
@@ -27,7 +27,7 @@ export const useAuthStore = create<IAuthStore>()((set, get) => ({
     const resp = await authLogin(email, password);
 
     if (!resp) {
-      get().reset();
+      get().logout();
       return false;
     }
 
@@ -48,7 +48,7 @@ export const useAuthStore = create<IAuthStore>()((set, get) => ({
   checkStatus: async () => {
     const resp = await checkAuthStatus();
 
-    if (!resp) return get().reset();
+    if (!resp) return get().logout();
 
     set({
       status: 'authenticated',
@@ -57,7 +57,10 @@ export const useAuthStore = create<IAuthStore>()((set, get) => ({
     });
   },
 
-  reset: () => {
+  logout: async () => {
+    await StorageAdapter.removeItem('access-token');
+    await StorageAdapter.removeItem('refresh-token');
+
     set({
       status: 'unauthenticated',
       accessToken: undefined,

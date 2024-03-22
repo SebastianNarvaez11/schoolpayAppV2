@@ -24,3 +24,7 @@ export interface ISchoolAuthResponse {
 export interface IAuthCheckStatusResponse {
   user: IUserAuthResponse;
 }
+
+export interface IRefreshTokenResponse {
+  newAccessToken: string;
+}

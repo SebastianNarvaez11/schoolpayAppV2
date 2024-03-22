@@ -3,7 +3,7 @@ import {Pressable, Text, View} from 'react-native';
 import {useAuthStore, useThemeStore} from '../../store';
 
 export const HomeScreen = () => {
-  const {checkStatus} = useAuthStore();
+  const {checkStatus, logout} = useAuthStore();
   const {setTheme, setIsSystemTheme, colors} = useThemeStore();
 
   return (
@@ -33,6 +33,10 @@ export const HomeScreen = () => {
 
       <Pressable onPress={checkStatus}>
         <Text>Check status</Text>
+      </Pressable>
+
+      <Pressable onPress={logout}>
+        <Text>Salir</Text>
       </Pressable>
     </View>
   );

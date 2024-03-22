@@ -8,6 +8,8 @@ export const checkAuthStatus = async () => {
       '/auth/check-status',
     );
 
+    console.log(data);
+
     return {
       user: AuthMapper.fromUserAuthResponseToModel(data.user),
       school: AuthMapper.fromSchoolAuthResponseToModel(data.user.school),
